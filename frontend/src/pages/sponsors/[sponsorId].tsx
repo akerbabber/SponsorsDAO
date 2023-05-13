@@ -76,13 +76,16 @@ const ProfilePage: React.FC = () => {
   );
 };
 
-export async function getStaticProps(context: { params: { sponsorId: any; }; }) {
-  const { sponsorId } = context.params;
+export async function getServerSideProps(context: {
+  query: { sponsorId: number };
+}) {
+  const { sponsorId } = context.query;
   const res = await fetch(`http://localhost:3000/api/sponsors/${sponsorId}`);
-  const sponsor: Sponsor = await res.json();
+  const data = await res.json();
+  console.log(data);
   return {
     props: {
-      sponsor,
+      data,
     },
   };
 }

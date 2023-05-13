@@ -1,6 +1,20 @@
 import { useRouter } from "next/router";
 import React from "react";
 
+export async function getServerSideProps(context: {
+  query: { hackerId: number };
+}) {
+  const { hackerId } = context.query;
+  const res = await fetch(`http://localhost:3000/api/hackers/${hackerId}`);
+  const data = await res.json();
+  console.log(data);
+  return {
+    props: {
+      data,
+    },
+  };
+}
+
 const ProfilePage: React.FC = () => {
   const router = useRouter();
   const { hackerId } = router.query;

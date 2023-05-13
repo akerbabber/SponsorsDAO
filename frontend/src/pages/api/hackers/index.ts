@@ -9,6 +9,5 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { hackerId } = req.query;
-  res.status(200).json({ name: `Hacker ${hackerId}` });
+  res.status(200).json({ name: "Hackers Index" });
 }
