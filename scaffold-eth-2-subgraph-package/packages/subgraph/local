@@ -1,0 +1,3 @@
+[31m[1mUnknown Syntax Error[22m[39m: Not enough positional arguments.
+
+$ yarn create [-p,--package #0] [-q,--quiet] <command> ...
