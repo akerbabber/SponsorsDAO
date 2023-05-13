@@ -82,3 +82,13 @@
 19:00:17.841318 table@remove removed @12
 19:00:17.844213 table@remove removed @5
 19:00:17.847152 table@remove removed @2
+=============== May 13, 2023 (UTC) ===============
+19:25:20.469108 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+19:25:20.516610 version@stat F·[0 1] S·4KiB[0B 4KiB] Sc·[0.00 0.00]
+19:25:20.519896 db@open opening
+19:25:20.525165 journal@recovery F·1
+19:25:20.537023 journal@recovery recovering @16
+19:25:20.614722 memdb@flush created L0@19 N·50 S·5KiB "/F5..BSA,v110":"/pr..IMQ,v132"
+19:25:20.624984 version@stat F·[1 1] S·10KiB[5KiB 4KiB] Sc·[0.25 0.00]
+19:25:20.692638 db@janitor F·4 G·0
+19:25:20.695353 db@open done T·172.490542ms
