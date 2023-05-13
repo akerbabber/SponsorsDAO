@@ -1,11 +1,21 @@
 import { useAccount } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useContractWrite, usePrepareContractWrite } from "wagmi";
+import abi from "../abi.json";
 
 function Register(): JSX.Element {
   const { isDisconnected } = useAccount();
 
   async function register() {
     // Add registration logic here
+    const { config } = usePrepareContractWrite({
+      address: "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
+      abi: abi,
+      functionName: "registerHacker",
+      args: [{ hacker: { email: "test@abc.com" } }],
+    });
+    const { data, isLoading, isSuccess, write } = useContractWrite(config);
+    console.log(`Data from contract is ${data}`);
   }
 
   return (

@@ -2,7 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { GetStaticProps } from "next";
 import { Hacker } from "@/interfaces/front";
-
+import abi from "../../abi.json";
+import { useContractRead } from "wagmi";
 type Props = {
   hackers: Hacker[];
 };
@@ -25,6 +26,19 @@ const ProfileSummary: React.FC<{ hacker: Hacker }> = ({ hacker }) => {
 };
 
 const ProfilesPage: React.FC<Props> = ({ hackers }) => {
+  let contractHackers;
+  const { data, isError, isLoading } = useContractRead({
+    address: "0x039b2A1461c5Dca438132D9341fb1Da386a984eB",
+    abi: abi,
+    functionName: "hackersCounter",
+    chainId: 5,
+    onSuccess(data) {
+      console.log(`Data from contract is ${data}`);
+      contractHackers = data;
+    },
+  });
+  console.log(`Data from contract is ${data}`);
+
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6">Hacker Profiles</h1>
