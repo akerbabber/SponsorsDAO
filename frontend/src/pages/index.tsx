@@ -25,9 +25,6 @@ const LandingPage: React.FC = () => {
           </span>
         </Link>
       </div>
-      <p className="text-center text-gray-500">
-        © 2023 Hackathon Sponsorship. All rights reserved.
-      </p>
     </div>
   );
 };

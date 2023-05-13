@@ -1,23 +1,8 @@
-import { useState } from "react";
-import { ethers } from "ethers";
+import { useAccount } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 function Register(): JSX.Element {
-  const [provider, setProvider] = useState<ethers.Provider | null>(null);
-  const [signer, setSigner] = useState<ethers.Signer | null>(null);
-
-  async function connectWallet() {
-    if (!window.ethereum) {
-      alert(
-        "No Ethereum wallet found. Please install MetaMask or another wallet to continue."
-      );
-      return;
-    } else {
-      const walletProvider = new ethers.BrowserProvider(window.ethereum);
-      setProvider(walletProvider);
-      const walletSigner = await walletProvider.getSigner();
-      setSigner(walletSigner);
-    }
-  }
+  const { isDisconnected } = useAccount();
 
   async function register() {
     // Add registration logic here
@@ -26,15 +11,9 @@ function Register(): JSX.Element {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-3xl font-bold mb-8">Register as a Hacker</h1>
-      {!signer && (
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={connectWallet}
-        >
-          Connect a wallet
-        </button>
-      )}
-      {signer && (
+      {isDisconnected ? (
+        <ConnectButton />
+      ) : (
         <form onSubmit={register} className="flex flex-col gap-4">
           <label>
             Name:
