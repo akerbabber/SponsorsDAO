@@ -1,7 +1,7 @@
 import { useAccount } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
-import abi from "../abi.json";
+import abi from "../../abi.json";
 import { contractAddress } from "@/constants";
 
 function Register(): JSX.Element {
@@ -11,15 +11,28 @@ function Register(): JSX.Element {
   const { config } = usePrepareContractWrite({
     address: contractAddress,
     abi: abi,
-    functionName: "registerHackathon",
-    args: ["event1", "", "", "", BigInt("0"), BigInt("0"), BigInt("0")],
+    functionName: "registerSponsor",
+    args: [
+      [
+        "1inch",
+        "",
+        "",
+        "",
+        "The unicorn of unicorns",
+        BigInt(0),
+        BigInt(0),
+        BigInt(0),
+        BigInt(0),
+      ],
+      BigInt(0),
+    ],
   });
   const { data, isLoading, isSuccess, write } = useContractWrite(config);
   console.log(`Data from contract is ${data}`);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-3xl font-bold mb-8">Register as a Hacker</h1>
+      <h1 className="text-3xl font-bold mb-8">Register as a Sponsor</h1>
       {isDisconnected ? (
         <ConnectButton />
       ) : (
@@ -33,6 +46,7 @@ function Register(): JSX.Element {
             <input type="email" name="email" />
           </label>
           <button
+            disabled={isLoading}
             type="submit"
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
           >

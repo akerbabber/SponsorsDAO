@@ -27,6 +27,14 @@ const ProfilesPage: React.FC<ProfilesPageProps> = ({ profiles }) => {
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6">Sponsors Profiles</h1>
+      <Link href="/sponsors/register" passHref>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+          Add new Sponsor
+        </button>
+      </Link>
+      <h2 className="mb-4">
+        <span className="font-bold">{profiles.length}</span> sponsors registered
+      </h2>
       {profiles.map((profile) => (
         <ProfileSummary key={profile.id} profile={profile} />
       ))}
