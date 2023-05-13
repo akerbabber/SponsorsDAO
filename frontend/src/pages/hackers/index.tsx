@@ -9,18 +9,18 @@ type Props = {
 
 const ProfileSummary: React.FC<{ hacker: Hacker }> = ({ hacker }) => {
   return (
-    <div key={hacker.id} className="flex items-center mb-4">
-      <img
-        src={hacker.imageUrl ?? "/images/generic-profile.jpg"}
-        className="w-12 h-12 object-cover rounded-full mr-4"
-      />
-      <Link href={`/hackers/${hacker.id}`} passHref>
+    <Link href={`/hackers/${hacker.id}`} passHref>
+      <div key={hacker.id} className="flex items-center mb-4">
+        <img
+          src={hacker.imageUrl ?? "/images/generic-profile.jpg"}
+          className="w-12 h-12 object-cover rounded-full mr-4"
+        />
         <div>
           <span className="text-xl font-bold">{hacker.name}</span>
           <p className="text-gray-500">{hacker.bio}</p>
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };
 
@@ -35,11 +35,10 @@ const ProfilesPage: React.FC<Props> = ({ hackers }) => {
   );
 };
 
-
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const res = await fetch("http://localhost:3000/api/hackers");
   const hackers = await res.json();
-  
+
   return {
     props: {
       hackers,

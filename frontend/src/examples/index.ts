@@ -70,7 +70,7 @@ export const exampleHackers: Array<Hacker> = [
 
 export const exampleHackathons: Array<Hackathon> = [
   {
-    id: 1,
+    id: 0,
     name: "Hackathon 2021",
     date: "2021-10-30",
     location: "Online",
@@ -78,7 +78,7 @@ export const exampleHackathons: Array<Hackathon> = [
     description: "The biggest hackathon of the year",
   },
   {
-    id: 2,
+    id: 1,
     name: "Summer Hackathon",
     date: "2022-07-15",
     location: "San Francisco",
@@ -86,7 +86,7 @@ export const exampleHackathons: Array<Hackathon> = [
     description: "A hackathon for the summer",
   },
   {
-    id: 3,
+    id: 2,
     name: "Hack the Planet",
     date: "2023-02-18",
     location: "Tokyo",

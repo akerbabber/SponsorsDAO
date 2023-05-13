@@ -6,7 +6,10 @@ const HackerPage: React.FC<{ hacker: Hacker }> = ({ hacker }) => {
     <div className="max-w-2xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6">{hacker.name}</h1>
       <div className="flex items-center mb-4">
-        <div className="w-12 h-12 bg-gray-200 rounded-full mr-4" />
+        <img
+          className="w-12 h-12 bg-gray-200 rounded-full mr-4"
+          src={hacker.imageUrl || "/images/generic-profile.jpg"}
+        />
         <div>
           <p className="text-gray-500">{hacker.location}</p>
         </div>
