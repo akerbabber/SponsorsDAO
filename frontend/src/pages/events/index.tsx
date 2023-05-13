@@ -1,33 +1,13 @@
 import React from "react";
 import Link from "next/link";
+import { Hackathon } from "@/interfaces/front";
+import { GetStaticProps } from "next/types";
 
-type Event = {
-  id: number;
-  name: string;
-  date: string;
-  location: string;
-  imageUrl: string;
+type Props = {
+  events: Hackathon[];
 };
 
-const events: Event[] = [
-  {
-    id: 1,
-    name: "ETH Global: Lisbon",
-    date: "June 12-14, 2023",
-    location: "San Francisco, CA",
-    imageUrl: "/images/events/event-1.webp",
-  },
-  {
-    id: 2,
-    name: "ETH New York",
-    date: "July 9-11, 2023",
-    location: "New York, NY",
-    imageUrl: "/images/events/event-2.webp",
-  },
-  // Add more events here
-];
-
-const EventsPage: React.FC = () => {
+const EventsPage: React.FC<Props> = ({ events }) => {
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6">Hackathon Events</h1>
@@ -48,6 +28,17 @@ const EventsPage: React.FC = () => {
       ))}
     </div>
   );
+};
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const res = await fetch("http://localhost:3000/api/events");
+  const events = await res.json();
+
+  return {
+    props: {
+      events,
+    },
+  };
 };
 
 export default EventsPage;

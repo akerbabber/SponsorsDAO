@@ -1,30 +1,13 @@
 import React from "react";
 import Link from "next/link";
+import { GetStaticProps } from "next";
+import { Hacker } from "@/interfaces/front";
 
-type Profile = {
-  id: number;
-  name: string;
-  bio: string;
-  imageUrl?: string;
+type Props = {
+  hackers: Hacker[];
 };
 
-const hackers: Profile[] = [
-  {
-    id: 1,
-    name: "John Doe",
-    bio: "I love coding and building cool stuff!",
-    // imageUrl: "/images/profile-1.jpg",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    bio: "Frontend developer and designer",
-    // imageUrl: "/images/profile-2.jpg",
-  },
-  // Add more profiles here
-];
-
-const ProfileSummary: React.FC<{ hacker: Profile }> = ({ hacker }) => {
+const ProfileSummary: React.FC<{ hacker: Hacker }> = ({ hacker }) => {
   return (
     <div key={hacker.id} className="flex items-center mb-4">
       <img
@@ -41,15 +24,27 @@ const ProfileSummary: React.FC<{ hacker: Profile }> = ({ hacker }) => {
   );
 };
 
-const ProfilesPage: React.FC = () => {
+const ProfilesPage: React.FC<Props> = ({ hackers }) => {
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6">Hacker Profiles</h1>
       {hackers.map((hacker) => (
-        <ProfileSummary hacker={hacker} />
+        <ProfileSummary hacker={hacker} key={hacker.id} />
       ))}
     </div>
   );
+};
+
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const res = await fetch("http://localhost:3000/api/hackers");
+  const hackers = await res.json();
+  
+  return {
+    props: {
+      hackers,
+    },
+  };
 };
 
 export default ProfilesPage;

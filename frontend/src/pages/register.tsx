@@ -12,10 +12,10 @@ function Register(): JSX.Element {
       );
       return;
     } else {
-      const provider = new ethers.BrowserProvider(window.ethereum!);
-      setProvider(provider);
-      const signer = await provider.getSigner();
-      setSigner(signer);
+      const walletProvider = new ethers.BrowserProvider(window.ethereum);
+      setProvider(walletProvider);
+      const walletSigner = await walletProvider.getSigner();
+      setSigner(walletSigner);
     }
   }
 

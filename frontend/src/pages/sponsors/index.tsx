@@ -1,33 +1,18 @@
-import React from 'react';
-import Link from 'next/link';
+import { GetStaticProps } from "next";
+import { Sponsor } from "@/interfaces/front";
+import Link from "next/link";
 
-type Profile = {
-  id: number;
-  name: string;
-  bio: string;
-  imageUrl: string;
+type ProfilesPageProps = {
+  profiles: Sponsor[];
 };
 
-const profiles: Profile[] = [
-  {
-    id: 1,
-    name: '1inch',
-    bio: 'To the moon',
-    imageUrl: '/images/sponsors/1inch.png',
-  },
-  {
-    id: 2,
-    name: 'Ethereum Foundation',
-    bio: 'Distributed computing for everyone',
-    imageUrl: '/images/sponsors/ethereum-foundation.jpeg',
-  },
-  // Add more profiles here
-];
-
-const ProfileSummary: React.FC<{ profile: Profile }> = ({ profile }) => {
+const ProfileSummary: React.FC<{ profile: Sponsor }> = ({ profile }) => {
   return (
     <div key={profile.id} className="flex items-center mb-4">
-      <img src={profile.imageUrl} className="w-12 h-12 object-cover rounded-full mr-4" />
+      <img
+        src={profile.logoUrl}
+        className="w-12 h-12 object-cover rounded-full mr-4"
+      />
       <div>
         <Link href={`/sponsors/${profile.id}`} passHref>
           <span className="text-xl font-bold">{profile.name}</span>
@@ -38,15 +23,24 @@ const ProfileSummary: React.FC<{ profile: Profile }> = ({ profile }) => {
   );
 };
 
-const ProfilesPage: React.FC = () => {
+const ProfilesPage: React.FC<ProfilesPageProps> = ({ profiles }) => {
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6">Hacker Profiles</h1>
       {profiles.map((profile) => (
-        <ProfileSummary profile={profile} />
+        <ProfileSummary key={profile.id} profile={profile} />
       ))}
     </div>
   );
+};
+
+export const getStaticProps: GetStaticProps<ProfilesPageProps> = async () => {
+  const res = await fetch("http://localhost:3000/api/sponsors");
+  const profiles = await res.json();
+
+  return {
+    props: { profiles },
+  };
 };
 
 export default ProfilesPage;
