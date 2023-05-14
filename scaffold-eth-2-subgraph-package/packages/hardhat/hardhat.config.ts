@@ -72,6 +72,22 @@ const config: HardhatUserConfig = {
       url: `https://polygon-mumbai.g.alchemy.com/v2/${providerApiKey}`,
       accounts: [deployerPrivateKey],
     },
+    gnosisTestnet: {
+      url: `https://rpc.chiado.gnosis.gateway.fm`,
+      accounts: [deployerPrivateKey],
+  },
+  scrollTestnet: {
+    url: `https://alpha-rpc.scroll.io/l2`,
+    accounts: [deployerPrivateKey],
+  },
+  lineaTestnet: {
+    url: `https://rpc.goerli.linea.build`,
+    accounts: [deployerPrivateKey],
+  },
+  mantleTestnet: {
+    url: `https://rpc.testnet.mantle.xyz`,
+    accounts: [deployerPrivateKey],
+  },
   },
   verify: {
     etherscan: {
