@@ -27,11 +27,6 @@ const Navbar: React.FC = () => {
               </Link>
             </li>
             <li>
-              <Link href="/register">
-                <span className="hover:text-gray-400">Register</span>
-              </Link>
-            </li>
-            <li>
               <ConnectButton />
             </li>
           </ul>

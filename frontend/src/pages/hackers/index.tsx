@@ -4,7 +4,8 @@ import { GetStaticProps } from "next";
 import { Hacker } from "@/interfaces/front";
 import abi from "../../abi.json";
 import { useContractRead } from "wagmi";
-import { contractAddress } from "@/constants";
+import { contractAddress, lensSubgraphUri } from "@/constants";
+import { subgraphUri } from "@/constants";
 type Props = {
   hackers: Hacker[];
 };
@@ -41,7 +42,7 @@ const ProfilesPage: React.FC<Props> = ({ hackers }) => {
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6">Hacker Profiles</h1>
-      <Link href="/register" passHref>
+      <Link href="/hackers/register" passHref>
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
           Register a new Hacker
         </button>
@@ -49,20 +50,62 @@ const ProfilesPage: React.FC<Props> = ({ hackers }) => {
       <h2 className="mb-4">
         <span className="font-bold">{hackersCount}</span> hackers registered
       </h2>
-      {hackers.map((hacker) => (
+      {JSON.stringify(hackers)}
+      {/* {hackers.map((hacker) => (
         <ProfileSummary hacker={hacker} key={hacker.id} />
-      ))}
+      ))} */}
     </div>
   );
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const res = await fetch("http://localhost:3000/api/hackers");
+  const query = `
+  {
+    hackerRegistrations {
+      hacker
+    }
+  }
+`;
+  const res = await fetch(subgraphUri, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query }),
+  });
   const hackers = await res.json();
-
+  const enrichedHackers = hackers.data.hackerRegistrations.map(
+    async ({ hacker }) => {
+      console.log(`Hacker is ${hacker}`)
+      const lensQuery = `
+{
+  profiles( 
+    where: {owner: "${hacker}"}
+    ) {
+      id
+      profileId
+    pubCount
+    owner
+    handle
+    imageURI
+  }
+}
+`;
+      const lensRes = await fetch(lensSubgraphUri, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ lensQuery }),
+      });
+      const lensHackers = await lensRes.json();
+      console.log(`Got lens hackers: ${JSON.stringify(lensHackers)}`);
+    }
+  );
+  console.log(`Got hackers addresses ${JSON.stringify(enrichedHackers)}`);
   return {
     props: {
-      hackers,
+      hackers: hackers.data.hackerRegistrations,
     },
   };
 };

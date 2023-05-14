@@ -11,6 +11,11 @@ const EventsPage: React.FC<Props> = ({ events }) => {
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6">Hackathons</h1>
+      <Link href="/events/register" passHref>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+          Register a new Hackathon
+        </button>
+      </Link>
       {events.map((event) => (
         <div key={event.id} className="mb-8">
           <Link href={`/events/${event.id}`} passHref>
