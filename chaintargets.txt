@@ -1,0 +1,15 @@
+polygon (ez faucet) done
+gnosis chain (ez faucet) done
+linea (got goerli eth) done 
+scroll (converted goerli eths) done
+mantle (got mantle token (is it enugh?)) done
+optimism (got goerli eth)
+
+token targets:
+apecoin https://goerli.etherscan.io/address/0x328507DC29C95c170B56a1b3A758eB7a9E73455c
+zkbob
+gho
+
+account abstraction legends
+safe and gnosis
+

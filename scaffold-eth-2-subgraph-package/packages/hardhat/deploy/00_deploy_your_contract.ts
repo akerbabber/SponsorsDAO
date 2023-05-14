@@ -39,6 +39,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
+  
 
   // Get the deployed contract
   // const yourContract = await hre.ethers.getContract("YourContract", deployer);
