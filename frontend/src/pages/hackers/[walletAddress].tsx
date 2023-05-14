@@ -1,5 +1,7 @@
 import React from "react";
 import { Hacker } from "@/interfaces/front";
+import { walletActions } from "viem/dist/types/clients/decorators/wallet";
+import { lensSubgraphUri } from "@/constants";
 
 const query = (walletAddress: string) => {
   return `{
@@ -39,15 +41,35 @@ const HackerPage: React.FC<{ hacker: Hacker }> = ({ hacker }) => {
 };
 
 export async function getServerSideProps(context: {
-  query: { hackerId: number };
+  query: { walletAddress: string };
 }) {
-  const { hackerId } = context.query;
-  const res = await fetch(`http://localhost:3000/api/hackers/${hackerId}`);
-  const hacker = await res.json();
-  console.log(hacker);
+  const wallet = context.query.walletAddress;
+  const lensQuery = `
+  {
+    profiles( 
+      where: {owner: "${wallet}"}
+      ) {
+        id
+        profileId
+      pubCount
+      owner
+      handle
+      imageURI
+    }
+  }
+  `;
+  const lensRes = await fetch(lensSubgraphUri, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ lensQuery }),
+  });
+
+  console.log(lensRes);
   return {
     props: {
-      hacker,
+      hacker: lensRes,
     },
   };
 }

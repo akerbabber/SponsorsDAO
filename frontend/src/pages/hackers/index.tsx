@@ -11,8 +11,9 @@ type Props = {
 };
 
 const ProfileSummary: React.FC<{ hacker: Hacker }> = ({ hacker }) => {
+  console.log(`Hacker is ${JSON.stringify(hacker)}`)
   return (
-    <Link href={`/hackers/${hacker.id}`} passHref>
+    <Link href={`/hackers/${hacker['hacker']}`} passHref>
       <div key={hacker.id} className="flex items-center mb-4">
         <img
           src={hacker.imageUrl ?? "/images/generic-profile.jpg"}
@@ -39,6 +40,8 @@ const ProfilesPage: React.FC<Props> = ({ hackers }) => {
     },
   });
 
+  console.log(`Hackers are ${JSON.stringify(hackers)}`);
+
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6">Hacker Profiles</h1>
@@ -50,10 +53,10 @@ const ProfilesPage: React.FC<Props> = ({ hackers }) => {
       <h2 className="mb-4">
         <span className="font-bold">{hackersCount}</span> hackers registered
       </h2>
-      {JSON.stringify(hackers)}
-      {/* {hackers.map((hacker) => (
+
+      {hackers.map((hacker) => (
         <ProfileSummary hacker={hacker} key={hacker.id} />
-      ))} */}
+      ))}
     </div>
   );
 };
@@ -76,7 +79,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   const hackers = await res.json();
   const enrichedHackers = hackers.data.hackerRegistrations.map(
     async ({ hacker }) => {
-      console.log(`Hacker is ${hacker}`)
+      console.log(`Hacker is ${hacker}`);
       const lensQuery = `
 {
   profiles( 

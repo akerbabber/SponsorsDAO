@@ -30,7 +30,7 @@ const initialHackerState: Hacker = {
   discordHandle: "",
   email: "",
   location: "",
-  DAOs: []
+  DAOs: ['']
 };
 
 const HackerForm = () => {
@@ -60,12 +60,13 @@ const HackerForm = () => {
         hacker.discordHandle,
         hacker.email,
         hacker.location,
-        [],
+        ['0x...'],
       ],
     ],
   });
 
   const { data, isLoading, isSuccess, write } = useContractWrite(config);
+  console.log(`Hacker data from contract is ${JSON.stringify(data)}`);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
