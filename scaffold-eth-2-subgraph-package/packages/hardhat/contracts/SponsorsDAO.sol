@@ -1,6 +1,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "./HackerSoulboundNFT.sol";
 
 contract SponsorsDAO {
     using SafeERC20 for IERC20;
@@ -145,6 +146,7 @@ contract SponsorsDAO {
     );
    
     IERC20 public immutable paymentToken;
+    HackerSoulboundNFT public immutable hackerNFT;
     mapping (address => Hacker) public hackers;
     mapping (uint => address) public hackerAddressByIndex;
     uint public hackersCounter;
@@ -152,11 +154,11 @@ contract SponsorsDAO {
     uint public hackathonsCounter;
     uint constant public PRECISION = 10000;
 
-    address public admin;
 
-    constructor(IERC20 _paymentToken) {
+
+    constructor(IERC20 _paymentToken, HackerSoulboundNFT _hackerNFT) {
         paymentToken = _paymentToken;
-        admin = msg.sender;
+        hackerNFT = _hackerNFT;
     }
 
     function registerHacker(Hacker memory hacker) external {
@@ -175,7 +177,8 @@ contract SponsorsDAO {
         if(hackathons[hackathonIndex].lastSponsorDeadline < sponsor.deadline) {
             hackathons[hackathonIndex].lastSponsorDeadline = sponsor.deadline;
         }
-        IERC20(paymentToken).safeTransferFrom(msg.sender, address(this), sponsor.offeredAmount);
+        emit SponsorRegistration(msg.sender, hackathonIndex);
+        //IERC20(paymentToken).safeTransferFrom(msg.sender, address(this), sponsor.offeredAmount);
     }
 
     function registerHackathon(
@@ -186,7 +189,6 @@ contract SponsorsDAO {
         uint256 startDate,
         uint256 endDate,
         uint lastSponsorDeadline) external {
-        require(msg.sender == admin, "Only admin can register hackathon");
         Hackathon storage hackathon = hackathons[hackathonsCounter];
             hackathon.admin = msg.sender;
             hackathon.name = name;
@@ -241,6 +243,7 @@ contract SponsorsDAO {
         if (!isLocked) {
             unlockSponsorship(hackathonIndex, sponsorshipIndex, hackathon.sponsorIndexByAddress[msg.sender]);
         }
+        if(hackerNFT.balanceOf(sponsorship.hacker) == 0) hackerNFT.safeMint(sponsorship.hacker);
         
     }
 

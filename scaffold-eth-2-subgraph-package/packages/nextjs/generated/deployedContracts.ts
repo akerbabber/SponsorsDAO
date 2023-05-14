@@ -314,7 +314,7 @@ const contracts = {
           ],
         },
         SponsorsDAO: {
-          address: "0x039b2A1461c5Dca438132D9341fb1Da386a984eB",
+          address: "0x7318099A6B7033Fe60B8a84aeAaD099b3019acdB",
           abi: [
             {
               inputs: [
@@ -640,19 +640,6 @@ const contracts = {
                   internalType: "uint256",
                   name: "",
                   type: "uint256",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "admin",
-              outputs: [
-                {
-                  internalType: "address",
-                  name: "",
-                  type: "address",
                 },
               ],
               stateMutability: "view",
