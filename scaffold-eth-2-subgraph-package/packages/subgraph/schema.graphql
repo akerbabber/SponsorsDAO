@@ -1,0 +1,114 @@
+type HackathonRegistration @entity(immutable: true) {
+  id: Bytes!
+  hackathonIndex: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type HackerRegistration @entity(immutable: true) {
+  id: Bytes!
+  hacker: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LockedFundsHandled @entity(immutable: true) {
+  id: Bytes!
+  hacker: Bytes! # address
+  sponsor: Bytes! # address
+  sponsorshipIndex: BigInt! # uint256
+  hackathonIndex: BigInt! # uint256
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SponsorRegistration @entity(immutable: true) {
+  id: Bytes!
+  sponsor: Bytes! # address
+  hackathonIndex: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SponsorshipApproved @entity(immutable: true) {
+  id: Bytes!
+  hacker: Bytes! # address
+  sponsor: Bytes! # address
+  hackathonIndex: BigInt! # uint256
+  sponsorshipIndex: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SponsorshipFunded @entity(immutable: true) {
+  id: Bytes!
+  sponsor: Bytes! # address
+  hackathonIndex: BigInt! # uint256
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SponsorshipRequested @entity(immutable: true) {
+  id: Bytes!
+  hacker: Bytes! # address
+  hackathonIndex: BigInt! # uint256
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SponsorshipUnlocked @entity(immutable: true) {
+  id: Bytes!
+  hacker: Bytes! # address
+  sponsor: Bytes! # address
+  sponsorshipIndex: BigInt! # uint256
+  hackathonIndex: BigInt! # uint256
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SponsorshipWithdrawn @entity(immutable: true) {
+  id: Bytes!
+  hacker: Bytes! # address
+  sponsorshipIndex: BigInt! # uint256
+  hackathonIndex: BigInt! # uint256
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TrailGiven @entity(immutable: true) {
+  id: Bytes!
+  hacker: Bytes! # address
+  sponsor: Bytes! # address
+  sponsorshipIndex: BigInt! # uint256
+  hackathonIndex: BigInt! # uint256
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UpfrontGiven @entity(immutable: true) {
+  id: Bytes!
+  hacker: Bytes! # address
+  sponsor: Bytes! # address
+  sponsorshipIndex: BigInt! # uint256
+  hackathonIndex: BigInt! # uint256
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

@@ -1,0 +1,54 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: goerli
+    source:
+      address: "0x039b2A1461c5Dca438132D9341fb1Da386a984eB"
+      abi: Contract
+      startBlock: 8995126
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - HackathonRegistration
+        - HackerRegistration
+        - LockedFundsHandled
+        - SponsorRegistration
+        - SponsorshipApproved
+        - SponsorshipFunded
+        - SponsorshipRequested
+        - SponsorshipUnlocked
+        - SponsorshipWithdrawn
+        - TrailGiven
+        - UpfrontGiven
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: HackathonRegistration(uint256)
+          handler: handleHackathonRegistration
+        - event: HackerRegistration(indexed address)
+          handler: handleHackerRegistration
+        - event: LockedFundsHandled(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleLockedFundsHandled
+        - event: SponsorRegistration(indexed address,uint256)
+          handler: handleSponsorRegistration
+        - event: SponsorshipApproved(indexed address,indexed address,uint256,uint256)
+          handler: handleSponsorshipApproved
+        - event: SponsorshipFunded(indexed address,uint256,uint256)
+          handler: handleSponsorshipFunded
+        - event: SponsorshipRequested(indexed address,uint256,uint256)
+          handler: handleSponsorshipRequested
+        - event: SponsorshipUnlocked(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleSponsorshipUnlocked
+        - event: SponsorshipWithdrawn(indexed address,uint256,uint256,uint256)
+          handler: handleSponsorshipWithdrawn
+        - event: TrailGiven(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleTrailGiven
+        - event: UpfrontGiven(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleUpfrontGiven
+      file: ./src/contract.ts
